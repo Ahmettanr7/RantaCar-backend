@@ -12,6 +12,6 @@ namespace Business.Constants
         public static string DataDeleted = "Veri silindi";
         public static string DailyPriceInvalid = "Günlük fiyatı geçersiz";
         public static string DataAdded = "Veri eklendi";
-        public static string MaintenanceTime = "Sitemiz şuanda bakımdadır 20:00 saati ile işleminizi gerçekleştirebilirsiniz.";
+        public static string MaintenanceTime = "Sitemiz şuanda bakımdadır 01:00 saati ile işleminizi gerçekleştirebilirsiniz.";
     }
 }
