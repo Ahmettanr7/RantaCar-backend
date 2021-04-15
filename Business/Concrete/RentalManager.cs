@@ -54,10 +54,10 @@ namespace Business.Concrete
         }
 
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetails(Expression<Func<Rental, bool>> filter = null)
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
             
-            return new SuccessDataResult<List<RentalDetailDto>>(  _rentalDal.GetCarDetails());
+            return new SuccessDataResult<List<RentalDetailDto>>(  _rentalDal.GetRentalDetails());
         }
 
 

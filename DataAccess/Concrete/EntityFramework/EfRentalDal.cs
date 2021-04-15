@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, RantaCarContext>, IRentalDal
     {
-        public List<RentalDetailDto> GetCarDetails()
+        public List<RentalDetailDto> GetRentalDetails(Expression<Func<RentalDetailDto, bool>> filter = null)
         {
             using (RantaCarContext context = new RantaCarContext())
             {
@@ -36,7 +36,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  DailyPrice = c.DailyPrice,
                                  TotalPrice = Convert.ToDecimal(r.ReturnDate.Value.Day - r.RentDate.Day) * c.DailyPrice
                              };
-                return result.ToList();
+                return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
         }
     }
