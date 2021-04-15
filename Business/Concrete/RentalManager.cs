@@ -25,7 +25,7 @@ namespace Business.Concrete
         public IResult Add(Rental rental)
         {
             //Araç TEslim edildiyse Ekle!
-            //.HasValue teslim edilme tarihinde değer varsa true yoksa false, başındaki ünlem tersine çevirir.
+            //.HasValue teslim edilme tarihinde değer varsa değeri true yoksa false yap
             // Any ile resultın değeri olup olmadığı kontrol edilir.
             var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && !r.ReturnDate.HasValue);
             if (!result.Any())
@@ -53,11 +53,13 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId));
         }
 
+
         public IDataResult<List<RentalDetailDto>> GetRentalDetails(Expression<Func<Rental, bool>> filter = null)
         {
-            //Buraya bakılacak!!!
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetCarDetails());
+            
+            return new SuccessDataResult<List<RentalDetailDto>>(  _rentalDal.GetCarDetails());
         }
+
 
         public IResult Update(Rental rental)
         {

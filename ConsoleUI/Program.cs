@@ -2,6 +2,7 @@
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using System;
+using System.Linq;
 
 namespace ConsoleUI
 {
@@ -18,7 +19,7 @@ namespace ConsoleUI
                 foreach (var rental in result.Data)
                 {
                     Console.WriteLine("Araba : {0}  Müşteri : {1}  Kiraladığı Tarih : {2}  Teslim Tarihi : {3}  Arabanın Günlüğü : {4} Toplam Tutar : {5}",
-                        rental.CarName , rental.CustomerName , rental.RentDate , rental.ReturnDate , rental.DailyPrice ,rental.TotalPrice);
+                        rental.CarName, rental.CustomerName, rental.RentDate, rental.ReturnDate, rental.DailyPrice, rental.TotalPrice);
                 }
             }
             else
