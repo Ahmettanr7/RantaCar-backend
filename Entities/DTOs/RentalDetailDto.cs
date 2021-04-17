@@ -14,6 +14,7 @@ namespace Entities.DTOs
         public DateTime RentDate { get; set; }
         public DateTime? ReturnDate { get; set; }
         public decimal DailyPrice { get; set; }
+        public int TotalRentDay { get; set; }
         public decimal TotalPrice { get; set; }
     }
 }
