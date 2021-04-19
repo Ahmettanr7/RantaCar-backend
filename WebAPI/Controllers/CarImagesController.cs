@@ -33,11 +33,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyid")]
+        [HttpGet("getimagesbyid")]
 
-        public IActionResult GetById(int id)
+        public IActionResult GetImagesById(int id)
         {
-            var result = _carImageService.GetById(id);
+            var result = _carImageService.GetImagesById(id);
             if (result.Success)
             {
                 return Ok(result);

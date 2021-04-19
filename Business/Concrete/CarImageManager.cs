@@ -89,7 +89,7 @@ namespace Business.Concrete
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarImageId == id));
         }
 
-        public IDataResult<List<CarImage>> GetById(int id)
+        public IDataResult<List<CarImage>> GetImagesById(int id)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
 
