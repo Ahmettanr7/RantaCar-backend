@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -27,17 +28,19 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            //Araç TEslim edildiyse Ekle!
-            //.HasValue teslim edilme tarihinde değer varsa değeri true yoksa false yap
-            // Any ile resultın değeri olup olmadığı kontrol edilir.
-            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && !r.ReturnDate.HasValue);
-            if (!result.Any())
+            IResult result = BusinessRules.Run(
+                CheckIfTheCarHasBeenDelivered(rental),
+               CheckIfitisOneDayPastDelivery(rental),
+               CheckIfRentDay(rental)
+               );
+
+            if (result != null)
             {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.RentalAdded);
+                return result;
             }
 
-            return new ErrorResult(Messages.RentalNotComeBack);
+            _rentalDal.Add(rental);
+            return new SuccessResult(Messages.RentalAdded);
         }
 
         public IResult Delete(Rental rental)
@@ -70,5 +73,37 @@ namespace Business.Concrete
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
+
+        private IResult CheckIfTheCarHasBeenDelivered(Rental rental)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && !r.ReturnDate.HasValue);
+            if (result.Any())
+            {
+                return new ErrorResult(Messages.RentalNotComeBack);
+            }
+            return new SuccessResult();   
+        }
+
+        private IResult CheckIfitisOneDayPastDelivery(Rental rental)
+        {
+            //<datetime.now.day değişecek
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && (rental.RentDate.Day - r.ReturnDate.Value.Day)==0);
+            if (result.Any())
+            {
+                return new ErrorResult(Messages.CarIsAtRest);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfRentDay(Rental rental)
+                   
+        {
+            if (rental.RentDate.Day<DateTime.Now.Day)
+            {
+                return new ErrorResult(Messages.RentDayCantbePast);
+            }
+            return new SuccessResult();
+        }
+        
     }
 }

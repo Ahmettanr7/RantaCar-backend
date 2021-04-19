@@ -35,7 +35,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ReturnDate = r.ReturnDate,
                                  DailyPrice = c.DailyPrice,
                                  TotalRentDay = (r.ReturnDate.Value.Day - r.RentDate.Day),
-                                 TotalPrice = Convert.ToDecimal(r.ReturnDate.Value.Day - r.RentDate.Day) * c.DailyPrice     
+                                 TotalPrice = Convert.ToDecimal(r.ReturnDate.Value.Day - r.RentDate.Day) * c.DailyPrice
                              };
                 return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
