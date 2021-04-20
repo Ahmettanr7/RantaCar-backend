@@ -1,6 +1,8 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -48,14 +50,22 @@ namespace Business.Constants
         public static string RentDayCantbePast ="Kiralama işlemi geçmiş tarih olamaz";
 
 
-        internal static string CarImageListed = "Görseller listelendi";
-        internal static string ImageDeleted = "Görsel silindi";
-        internal static string ImageAdded = "Görsel eklendi";
-        internal static string ImageUpdated = "Görsel güncellendi";
-        internal static string CantMoreThanFive = "Araca 5 ten fazla görsel eklenemez";
-        internal static string CarHaveNoImage = "Araca ait görsel bulunamadı";
-        internal static string InvalidImageExtension = "Geçersiz resim uzantısı";
-        internal static string CarImageMustBeExists = "Araba resmi mevcut olmalı";
-        
+        public static string CarImageListed = "Görseller listelendi";
+        public static string ImageDeleted = "Görsel silindi";
+        public static string ImageAdded = "Görsel eklendi";
+        public static string ImageUpdated = "Görsel güncellendi";
+        public static string CantMoreThanFive = "Araca 5 ten fazla görsel eklenemez";
+        public static string CarHaveNoImage = "Araca ait görsel bulunamadı";
+        public static string InvalidImageExtension = "Geçersiz resim uzantısı";
+        public static string CarImageMustBeExists = "Araba resmi mevcut olmalı";
+
+
+        public static string AuthorizationDenied = "Bu işlem için yetkiniz bulunmamaktadır";
+        public static string UserRegistered = "Kullanıcı kaydı başarılı";
+        public static string UserNotFound = "Kullanıcı bulunamadı";
+        public static string PasswordError = "Şifre hatalı";
+        public static string SuccessfulLogin = "Başarılı giriş";
+        public static string UserAlreadyExists = "Kullanıcı zaten var";
+        public static string AccessTokenCreated = "Erişim jetonu oluşturuldu";
     }
 }
