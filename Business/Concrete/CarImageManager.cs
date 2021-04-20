@@ -14,6 +14,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.IO;
+using Core.Aspects.Autofac.Caching;
+using Business.BusinessAspect.Autofac;
 
 namespace Business.Concrete
 {
@@ -26,6 +28,8 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
+        [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(CarImage carImage, IFormFile file)
         {
@@ -45,6 +49,8 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Delete(CarImage carImage)
         {
             IResult result = BusinessRules.Run(
@@ -55,16 +61,19 @@ namespace Business.Concrete
                 return result;
             }
 
+
             var image = _carImageDal.Get(c => c.Id == carImage.Id);
             if (image == null)
             {
-                return new ErrorResult("Resim bulunamadı");
+                return new ErrorResult(Messages.ImageNotFound);
             }
             FileHelper.Delete(image.ImagePath);
             _carImageDal.Delete(carImage);
-            return new SuccessResult("Resim silme işlemi başarılı");
+            return new SuccessResult(Messages.SuccessImageDeleted);
         }
 
+        [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult DeleteByCarId(int carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId);
@@ -74,31 +83,33 @@ namespace Business.Concrete
                 {
                     Delete(carImage);
                 }
-                return new SuccessResult("Arabanın bütün resimleri silindi");
+                return new SuccessResult(Messages.AllImagesDeleted);
             }
             return new ErrorResult(Messages.CarHaveNoImage);
         }
 
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
-        [ValidationAspect(typeof(CarImageValidator))]
+
+        [CacheAspect]
         public IDataResult<CarImage> Get(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
         }
-
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetImagesById(int id)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
 
-                        if (result != null)
-                        {
-                            return new ErrorDataResult<List<CarImage>>(result.Message);
-                        }
+            if (result != null)
+            {
+                return new ErrorDataResult<List<CarImage>>(result.Message);
+            }
 
-                        return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
+            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
         }
 
         private IResult CheckIfImageLimitExpired(int carId)
@@ -116,9 +127,9 @@ namespace Business.Concrete
             bool isValidFileExtension = Messages.ValidImageFileTypes.Any(t => t == Path.GetExtension(file.FileName).ToUpper());
             if (!isValidFileExtension)
             {
-                    return new ErrorResult(Messages.InvalidImageExtension);
+                return new ErrorResult(Messages.InvalidImageExtension);
             }
-                
+
             return new SuccessResult();
         }
 

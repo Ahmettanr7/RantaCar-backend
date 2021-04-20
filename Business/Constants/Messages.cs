@@ -67,5 +67,8 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Başarılı giriş";
         public static string UserAlreadyExists = "Kullanıcı zaten var";
         public static string AccessTokenCreated = "Erişim jetonu oluşturuldu";
+        internal static string ImageNotFound;
+        internal static string SuccessImageDeleted;
+        internal static string AllImagesDeleted;
     }
 }
