@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (RantaCarContext context = new RantaCarContext())
             {
-                return context.CarImages.Any(p => p.CarImageId == id);
+                return context.CarImages.Any(cI => cI.Id == id);
             }
         }
     }

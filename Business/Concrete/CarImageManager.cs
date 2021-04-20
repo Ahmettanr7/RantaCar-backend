@@ -48,14 +48,14 @@ namespace Business.Concrete
         public IResult Delete(CarImage carImage)
         {
             IResult result = BusinessRules.Run(
-                CheckIfImageExists(carImage.CarImageId)
+                CheckIfImageExists(carImage.Id)
                 );
             if (result != null)
             {
                 return result;
             }
 
-            var image = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
+            var image = _carImageDal.Get(c => c.Id == carImage.Id);
             if (image == null)
             {
                 return new ErrorResult("Resim bulunamadı");
@@ -86,7 +86,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IDataResult<CarImage> Get(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarImageId == id));
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
         }
 
         public IDataResult<List<CarImage>> GetImagesById(int id)

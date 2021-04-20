@@ -15,11 +15,11 @@ namespace DataAccess.Concrete
         public InMemoryCarDal()
         {   //Veritabanından geliyormuş gibi simule ediyoruz
             _cars = new List<Car> {
-                new Car {CarId = 1, BrandId = 1, ColorId = 2, ModelYear = 2021, DailyPrice = 350, Description = "Dizel"},
-                new Car {CarId = 2, BrandId = 2, ColorId = 4, ModelYear = 2019, DailyPrice = 250, Description = "Benzin"},
-                new Car {CarId = 3, BrandId = 1, ColorId = 5, ModelYear = 2021, DailyPrice = 325, Description = "Dizel"},
-                new Car {CarId = 4, BrandId = 3, ColorId = 1, ModelYear = 2010, DailyPrice = 200, Description = "LPG+Benzin"},
-                new Car {CarId = 5, BrandId = 5, ColorId = 7, ModelYear = 2016, DailyPrice = 225, Description = "Benzin"},
+                new Car {Id = 1, BrandId = 1, ColorId = 2, ModelYear = 2021, DailyPrice = 350, Description = "Dizel"},
+                new Car {Id = 2, BrandId = 2, ColorId = 4, ModelYear = 2019, DailyPrice = 250, Description = "Benzin"},
+                new Car {Id = 3, BrandId = 1, ColorId = 5, ModelYear = 2021, DailyPrice = 325, Description = "Dizel"},
+                new Car {Id = 4, BrandId = 3, ColorId = 1, ModelYear = 2010, DailyPrice = 200, Description = "LPG+Benzin"},
+                new Car {Id = 5, BrandId = 5, ColorId = 7, ModelYear = 2016, DailyPrice = 225, Description = "Benzin"},
 
             };
         }
@@ -31,7 +31,7 @@ namespace DataAccess.Concrete
 
         public void Delete(Car car)
         {
-            Car carToDelete = _cars.SingleOrDefault(c => c.CarId == car.CarId);
+            Car carToDelete = _cars.SingleOrDefault(c => c.Id == car.Id);
             _cars.Remove(carToDelete);
         }
 
@@ -52,7 +52,7 @@ namespace DataAccess.Concrete
 
         public List<Car> GetById(int carId)
         {
-            return _cars.Where(c => c.CarId == carId).ToList();
+            return _cars.Where(c => c.Id == carId).ToList();
         }
 
         public List<CarDetailDto> GetCarDetails()
@@ -62,7 +62,7 @@ namespace DataAccess.Concrete
 
         public void Update(Car car)
         {
-            Car carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
+            Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.DailyPrice = car.DailyPrice; 
