@@ -28,6 +28,8 @@ namespace WebAPI
             //AUTOFAC ile refactor edildi.
             services.AddControllers();
 
+            services.AddCors();
+
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -56,6 +58,9 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:57893").AllowAnyHeader());
+
 
             app.UseHttpsRedirection();
 
