@@ -35,6 +35,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarImage = (from i in context.CarImages
                                              where (c.Id == i.CarId)
                                              select new CarImage { Id = i.Id, CarId = c.Id, ImageDate = i.ImageDate, ImagePath = i.ImagePath }).ToList()
+                                
                              };
 
                 return filter == null ? result.ToList() : result.Where(filter).ToList();

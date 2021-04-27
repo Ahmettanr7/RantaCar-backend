@@ -102,14 +102,15 @@ namespace Business.Concrete
         //[CacheAspect]
         public IDataResult<List<CarImage>> GetImagesById(int id)
         {
-            IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
+            //IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
 
-            if (result != null)
-            {
-                return new ErrorDataResult<List<CarImage>>(result.Message);
-            }
+            //if (result != null)
+            //{
+            //    return new ErrorDataResult<List<CarImage>>(result.Message);
+            //}
 
-            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
+            //return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == id).ToList());
         }
 
         private IResult CheckIfImageLimitExpired(int carId)
@@ -143,26 +144,26 @@ namespace Business.Concrete
             return new ErrorResult(Messages.CarImageMustBeExists);
         }
 
-        private IDataResult<List<CarImage>> CheckIfCarImageNull(int carId)
-        {
-            try
-            {
-                string path = @"\images\default.jpg";
-                var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
-                if (!result)
-                {
-                    List<CarImage> carImage = new List<CarImage>();
-                    carImage.Add(new CarImage { CarId = carId, ImagePath = path, ImageDate = DateTime.Now });
-                    return new SuccessDataResult<List<CarImage>>(carImage);
-                }
-            }
-            catch (Exception exception)
-            {
+        //private IDataResult<List<CarImage>> CheckIfCarImageNull(int carId)
+        //{
+        //    try
+        //    {
+        //        string path = @"\images\default.jpg";
+        //        var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
+        //        if (!result)
+        //        {
+        //            List<CarImage> carImage = new List<CarImage>();
+        //            carImage.Add(new CarImage { CarId = carId, ImagePath = path, ImageDate = DateTime.Now });
+        //            return new SuccessDataResult<List<CarImage>>(carImage);
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
 
-                return new ErrorDataResult<List<CarImage>>(exception.Message);
-            }
+        //        return new ErrorDataResult<List<CarImage>>(exception.Message);
+        //    }
 
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId).ToList());
-        }
+        //    return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId).ToList());
+        //}
     }
 }
