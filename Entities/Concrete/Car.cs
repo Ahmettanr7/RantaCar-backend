@@ -13,7 +13,9 @@ namespace Entities.Concrete
         public int ColorId { get; set; }
         public int ModelYear { get; set; }
         public decimal DailyPrice { get; set; }
-        public string Description { get; set; }
+        public string GearType { get; set; }
+        public string EnginePower { get; set; }
+        public string FuelType { get; set; }
 
     }
 }

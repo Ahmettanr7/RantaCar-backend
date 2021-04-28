@@ -116,9 +116,9 @@ namespace Business.Concrete
         private IResult CheckIfImageLimitExpired(int carId)
         {
             int result = _carImageDal.GetAll(c => c.CarId == carId).Count;
-            if (result >= 5)
+            if (result >= 4)
             {
-                return new ErrorResult(Messages.CantMoreThanFive);
+                return new ErrorResult(Messages.OverLimit);
             }
             return new SuccessResult();
         }
