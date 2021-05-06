@@ -16,6 +16,7 @@ namespace Entities.Concrete
         public string GearType { get; set; }
         public string EnginePower { get; set; }
         public string FuelType { get; set; }
+        public string Description { get; set; }
 
     }
 }

@@ -54,11 +54,10 @@ namespace Business.Constants
         public static string ImageDeleted = "Görsel silindi";
         public static string ImageAdded = "Görsel eklendi";
         public static string ImageUpdated = "Görsel güncellendi";
-        public static string CantMoreThanFive = "Araca 5 ten fazla görsel eklenemez";
         public static string CarHaveNoImage = "Araca ait görsel bulunamadı";
         public static string InvalidImageExtension = "Geçersiz resim uzantısı";
         public static string CarImageMustBeExists = "Araba resmi mevcut olmalı";
-
+        public static string OverLimit = "Bir araca en fazla 4 resim yüklenebilir!";
 
         public static string AuthorizationDenied = "Bu işlem için yetkiniz bulunmamaktadır";
         public static string UserRegistered = "Kullanıcı kaydı başarılı";
@@ -70,6 +69,6 @@ namespace Business.Constants
         public static string ImageNotFound;
         public static string SuccessImageDeleted;
         public static string AllImagesDeleted;
-        public static string OverLimit = "Bir araca en fazla 4 resim yüklenebilir!";
+        
     }
 }

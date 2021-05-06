@@ -25,15 +25,22 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.BrandId equals b.Id
                              join u in context.Users
                              on cs.UserId equals u.Id
+                             join clr in context.Colors
+                             on c.ColorId equals clr.Id
                              select new RentalDetailDto
                              {
                                  RentalId = r.Id,
-                                 CarName = b.BrandName,
+                                 CustomerId = cs.Id,
+                                 UserId = u.Id,
+                                 CarName = c.CarName,
+                                 BrandName = b.BrandName,
+                                 ColorName = clr.ColorName,
                                  CustomerName = cs.CompanyName,
                                  UserName = u.FirstName + " " + u.LastName,
                                  RentDate = r.RentDate,
                                  ReturnDate = r.ReturnDate,
                                  DailyPrice = c.DailyPrice,
+                                 CarId = c.Id,
                                  TotalRentDay = (r.ReturnDate.Value.Day - r.RentDate.Day),
                                  TotalPrice = Convert.ToDecimal(r.ReturnDate.Value.Day - r.RentDate.Day) * c.DailyPrice
                              };

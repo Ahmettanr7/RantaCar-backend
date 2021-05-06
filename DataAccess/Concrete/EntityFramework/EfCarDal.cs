@@ -34,6 +34,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  GearType = c.GearType,
                                  EnginePower = c.EnginePower,
                                  FuelType = c.FuelType,
+                                 Description = c.Description,
                                  CarImage = (from i in context.CarImages
                                              where (c.Id == i.CarId)
                                              select new CarImage { Id = i.Id, CarId = c.Id, ImageDate = i.ImageDate, ImagePath = i.ImagePath }).ToList()
