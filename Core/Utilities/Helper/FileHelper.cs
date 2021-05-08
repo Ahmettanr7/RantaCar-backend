@@ -1,47 +1,44 @@
-﻿using Core.Utilities.Helpers;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 
 namespace Core.Utilities.FileManager
 {
-    public class FileHelper : IFileHelper
+    public class FileHelper
     {
-        static string _directory = Directory.GetCurrentDirectory() + @"\wwwroot\";
-        static string _path = @"Images\";
+        static string directory = Directory.GetCurrentDirectory() + @"\wwwroot\";
+        static string path = @"Images\";
+
         public static string Add(IFormFile file)
         {
             string extension = Path.GetExtension(file.FileName).ToUpper();
             string newFileName = Guid.NewGuid().ToString("N") + extension;
-            if (!Directory.Exists(_directory + _path))
+            if (!Directory.Exists(directory + path))
             {
-                Directory.CreateDirectory(_directory + _path);
+                Directory.CreateDirectory(directory + path);
             }
-            using (FileStream fileStream = File.Create(_directory + _path + newFileName))
+            using (FileStream fileStream = File.Create(directory + path + newFileName))
             {
                 file.CopyTo(fileStream);
                 fileStream.Flush();
             }
-            return (_path + newFileName).Replace("\\", "/");
+            return (path + newFileName).Replace("\\", "/");
+        }
+
+        public static string Update(IFormFile file, string oldImagePath)
+        {
+            Delete(oldImagePath);
+            return Add(file);
         }
 
         public static void Delete(string imagePath)
         {
-            if (File.Exists(_directory + imagePath.Replace("/", "\\"))
+            if (File.Exists(directory + imagePath.Replace("/", "\\"))
                 && Path.GetFileName(imagePath) != "default.jpg")
             {
-                File.Delete(_directory + imagePath.Replace("/", "\\"));
+                File.Delete(directory + imagePath.Replace("/", "\\"));
             }
-        }
-
-        public IResult CheckFileExists(IFormFile file)
-        {
-            if (file != null && file.Length > 0)
-            {
-                return new SuccessResult();
-            }
-            return new ErrorResult("No File.");
         }
     }
 }
