@@ -21,7 +21,7 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
@@ -29,7 +29,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ColorAdded);
         }
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
@@ -46,7 +46,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Color>(_colorDal.Get(c => c.Id == colorId));
         }
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {

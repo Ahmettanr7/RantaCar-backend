@@ -43,7 +43,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.DailyPrice >= min && p.DailyPrice <= max));
         }
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
@@ -57,7 +57,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DataAdded);
         }
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
@@ -65,7 +65,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DataUpdated);
         }
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);

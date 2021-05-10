@@ -28,7 +28,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("IRentalService.Get")]
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
@@ -47,16 +47,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalAdded);
         }
 
-        //[CacheRemoveAspect("IRentalService.Get")]
-        //[SecuredOperation("admin")]
+        [CacheRemoveAspect("IRentalService.Get")]
+        [SecuredOperation("admin")]
         public IResult Delete(Rental rental)
         {
             _rentalDal.Delete(rental);
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        //[CacheRemoveAspect("IRentalService.Get")]
-        //[SecuredOperation("admin")]
+        [CacheRemoveAspect("IRentalService.Get")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
@@ -64,19 +64,19 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalUpdated);
         }
 
-        //[CacheAspect]
+        [CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
-        //[CacheAspect]
+        [CacheAspect]
         public IDataResult<Rental> GetById(int rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId));
         }
 
-        //[CacheAspect]
+        [CacheAspect]
         public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
             
@@ -95,7 +95,6 @@ namespace Business.Concrete
 
         private IResult CheckIfitisOneDayPastDelivery(Rental rental)
         {
-            //<datetime.now.day değişecek
             var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && (rental.RentDate.Day - r.ReturnDate.Value.Day)==0);
             if (result.Any())
             {

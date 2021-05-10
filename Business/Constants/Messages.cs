@@ -66,6 +66,7 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Başarılı giriş";
         public static string UserAlreadyExists = "Kullanıcı zaten var";
         public static string AccessTokenCreated = "Erişim jetonu oluşturuldu";
+        public static string SuccessRegister = "Kayıt olundu. Giriş yapın";
         public static string ImageNotFound = "Resim bulunamadı"; 
         public static string SuccessImageDeleted = "resim silme işlemi başarılı";
         public static string AllImagesDeleted = "Araca ait bütün resimler silindi";

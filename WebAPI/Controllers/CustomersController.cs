@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
 
         public IActionResult GetByCustomerId(int id)
         {
-            var result = _customerService.GetCustomerDetailsByCustomerId(id);
+            var result = _customerService.GetById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,6 +48,16 @@ namespace WebAPI.Controllers
         public IActionResult GetByUserId(int id)
         {
             var result = _customerService.GetCustomerDetailsByUserId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("email")]
+        public IActionResult Email(string email)
+        {
+            var result = _customerService.getByEmail(email);
             if (result.Success)
             {
                 return Ok(result);

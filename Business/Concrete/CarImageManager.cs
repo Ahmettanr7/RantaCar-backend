@@ -28,8 +28,8 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
-        //[SecuredOperation("admin")]
-        //[CacheRemoveAspect("ICarImageService.Get")]
+        [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(CarImage carImage, IFormFile file)
         {
@@ -49,8 +49,8 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        //[SecuredOperation("admin")]
-        //[CacheRemoveAspect("ICarImageService.Get")]
+        [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Delete(CarImage carImage)
         {
             IResult result = BusinessRules.Run(
@@ -72,8 +72,8 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessImageDeleted);
         }
 
-        //[SecuredOperation("admin")]
-        //[CacheRemoveAspect("ICarImageService.Get")]
+        [SecuredOperation("admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult DeleteByCarId(int carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId);
@@ -88,28 +88,20 @@ namespace Business.Concrete
             return new ErrorResult(Messages.CarHaveNoImage);
         }
 
-        //[CacheAspect]
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
-        //[CacheAspect]
+        [CacheAspect]
         public IDataResult<CarImage> Get(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
         }
-        //[CacheAspect]
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetImagesById(int id)
         {
-            //IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
-
-            //if (result != null)
-            //{
-            //    return new ErrorDataResult<List<CarImage>>(result.Message);
-            //}
-
-            //return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == id).ToList());
         }
 
@@ -143,27 +135,5 @@ namespace Business.Concrete
 
             return new ErrorResult(Messages.CarImageMustBeExists);
         }
-
-        //private IDataResult<List<CarImage>> CheckIfCarImageNull(int carId)
-        //{
-        //    try
-        //    {
-        //        string path = @"\images\default.jpg";
-        //        var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
-        //        if (!result)
-        //        {
-        //            List<CarImage> carImage = new List<CarImage>();
-        //            carImage.Add(new CarImage { CarId = carId, ImagePath = path, ImageDate = DateTime.Now });
-        //            return new SuccessDataResult<List<CarImage>>(carImage);
-        //        }
-        //    }
-        //    catch (Exception exception)
-        //    {
-
-        //        return new ErrorDataResult<List<CarImage>>(exception.Message);
-        //    }
-
-        //    return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId).ToList());
-        //}
     }
 }
