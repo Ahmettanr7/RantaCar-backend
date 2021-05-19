@@ -19,30 +19,26 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from r in context.Rentals
                              join c in context.Cars
                              on r.CarId equals c.Id
-                             join cs in context.Customers
-                             on r.CustomerId equals cs.Id
                              join b in context.Brands
                              on c.BrandId equals b.Id
                              join u in context.Users
-                             on cs.UserId equals u.Id
+                             on r.UserId equals u.Id
                              join clr in context.Colors
                              on c.ColorId equals clr.Id
                              select new RentalDetailDto
                              {
                                  RentalId = r.Id,
-                                 CustomerId = cs.Id,
                                  UserId = u.Id,
                                  CarName = c.CarName,
                                  BrandName = b.BrandName,
                                  ColorName = clr.ColorName,
-                                 CustomerName = cs.CompanyName,
                                  UserName = u.FirstName + " " + u.LastName,
                                  RentDate = r.RentDate,
                                  ReturnDate = r.ReturnDate,
                                  DailyPrice = c.DailyPrice,
                                  CarId = c.Id,
-                                 TotalRentDay = (r.ReturnDate.Value.Day - r.RentDate.Day),
-                                 TotalPrice = Convert.ToDecimal(r.ReturnDate.Value.Day - r.RentDate.Day) * c.DailyPrice
+                                 TotalRentDay = (r.ReturnDate.Value.Day - r.RentDate.Day+(r.ReturnDate.Value.Month-r.RentDate.Month)*30+(r.ReturnDate.Value.Year-r.RentDate.Year)*365),
+                                 TotalPrice = Convert.ToDecimal(r.ReturnDate.Value.Day - r.RentDate.Day + (r.ReturnDate.Value.Month - r.RentDate.Month) * 30 + (r.ReturnDate.Value.Year - r.RentDate.Year) * 365) * c.DailyPrice
                              };
                 return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
